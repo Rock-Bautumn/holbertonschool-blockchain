@@ -10,7 +10,7 @@
 int ec_save(EC_KEY *key, char const *folder)
 {
 	FILE *output_file;
-	char *output_path[PATH_MAX];
+	char output_path[PATH_MAX];
 	struct stat status;
 
 	if (!key || !folder)
@@ -19,7 +19,7 @@ int ec_save(EC_KEY *key, char const *folder)
 	if (stat(folder, &status) == -1)
 		mkdir(folder, 0644);
 
-	sprintf(output_path, "%s/%s", folder, PRI_FILENAME);
+	sprintf(output_path, "%s%s", folder, PRI_FILENAME);
 
 	output_file = fopen(output_path, "w+");
 	if (!PEM_write_ECPrivateKey(output_file, key, NULL, NULL, 0, NULL, NULL))
@@ -29,7 +29,7 @@ int ec_save(EC_KEY *key, char const *folder)
 	}
 	fclose(output_file);
 
-	sprintf(output_path, "%s/%s", folder, PUB_FILENAME);
+	sprintf(output_path, "%s%s", folder, PUB_FILENAME);
 
 	output_file = fopen(output_path, "w+");
 	if (!PEM_write_EC_PUBKEY(output_file, key))
