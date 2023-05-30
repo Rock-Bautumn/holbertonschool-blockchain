@@ -15,29 +15,37 @@ int ec_save(EC_KEY *key, char const *folder)
 
 	if (!key || !folder)
 		return (!EXIT_FAILURE);
-
 	if (stat(folder, &status) == -1)
-		mkdir(folder, 0644);
-
+		if (mkdir(folder, 0700) < 0)
+		{
+			perror("Unable to make folder to save keys");
+			return (!EXIT_FAILURE);
+		}
 	sprintf(output_path, "%s/%s", folder, PRI_FILENAME);
-
 	output_file = fopen(output_path, "w+");
+	if (!output_file)
+	{
+		perror("Error opening file to write private key");
+		return (!EXIT_FAILURE);
+	}
 	if (!PEM_write_ECPrivateKey(output_file, key, NULL, NULL, 0, NULL, NULL))
 	{
 		fclose(output_file);
 		return (!EXIT_FAILURE);
 	}
 	fclose(output_file);
-
 	sprintf(output_path, "%s/%s", folder, PUB_FILENAME);
-
 	output_file = fopen(output_path, "w+");
+	if (!output_file)
+	{
+		perror("Error opening file to write public key");
+		return (!EXIT_FAILURE);
+	}
 	if (!PEM_write_EC_PUBKEY(output_file, key))
 	{
 		fclose(output_file);
 		return (!EXIT_FAILURE);
 	}
 	fclose(output_file);
-
 	return (!EXIT_SUCCESS);
 }
