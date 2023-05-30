@@ -18,10 +18,9 @@ EC_KEY *ec_load(char const *folder)
 
 	ec_key = EC_KEY_new_by_curve_name(EC_CURVE);
 
-	sprintf(input_path, "%s/%s", folder, PRI_FILENAME);
-
+	sprintf(input_path, "%s/%s", folder, PUB_FILENAME);
 	input_file = fopen(input_path, "r");
-	if (!PEM_read_ECPrivateKey(input_file, &ec_key, NULL, NULL))
+	if (PEM_read_EC_PUBKEY(input_file, &ec_key, NULL, NULL))
 	{
 		EC_KEY_free(ec_key);
 		fclose(input_file);
@@ -29,10 +28,9 @@ EC_KEY *ec_load(char const *folder)
 	}
 	fclose(input_file);
 
-	sprintf(input_path, "%s/%s", folder, PUB_FILENAME);
-
+	sprintf(input_path, "%s/%s", folder, PRI_FILENAME);
 	input_file = fopen(input_path, "r");
-	if (!PEM_read_EC_PUBKEY(input_file, &ec_key, NULL, NULL))
+	if (!PEM_read_ECPrivateKey(input_file, &ec_key, NULL, NULL))
 	{
 		EC_KEY_free(ec_key);
 		fclose(input_file);
