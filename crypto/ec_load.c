@@ -8,35 +8,35 @@
 
 EC_KEY *ec_load(char const *folder)
 {
-	FILE *input_file;
-	EC_KEY *ec_key;
-	char input_path[PATH_MAX];
-	struct stat status;
+	FILE *fa, *fb;
+	char *pri_key, *pub_key;
+	EC_KEY *eckey;
 
-	if (!folder || stat(folder, &status) == -1)
-		return (!EXIT_FAILURE);
-
-	/* ec_key = EC_KEY_new_by_curve_name(EC_CURVE); */
-
-	sprintf(input_path, "%s/%s", folder, PUB_FILENAME);
-	input_file = fopen(input_path, "r");
-	if (PEM_read_EC_PUBKEY(input_file, &ec_key, NULL, NULL))
+	if (!folder)
+		return (NULL);
+	pri_key = malloc(sizeof(char) * (strlen(folder) + 9));
+	if (!pri_key)
+		return (NULL);
+	pub_key = malloc(sizeof(char) * (strlen(folder) + 13));
+	if (!pub_key)
 	{
-		EC_KEY_free(ec_key);
-		fclose(input_file);
+		free(pri_key);
 		return (NULL);
 	}
-	fclose(input_file);
-
-	sprintf(input_path, "%s/%s", folder, PRI_FILENAME);
-	input_file = fopen(input_path, "r");
-	if (!PEM_read_ECPrivateKey(input_file, &ec_key, NULL, NULL))
+	strcpy(pri_key, folder), strcpy(pub_key, folder);
+	if (folder[strlen(folder) - 1] != '/')
+		strcat(pri_key, "/"), strcat(pub_key, "/");
+	strcat(pri_key, "key.pem"), strcat(pub_key, "key_pub.pem");
+	eckey = EC_KEY_new_by_curve_name(EC_CURVE);
+	fa = fopen(pri_key, "r"), free(pri_key);
+	fb = fopen(pub_key, "r"), free(pub_key);
+	if (!fa || !fb)
 	{
-		EC_KEY_free(ec_key);
-		fclose(input_file);
+		EC_KEY_free(eckey), fclose(fa), fclose(fb);
 		return (NULL);
 	}
-	fclose(input_file);
-
-	return (ec_key);
+	PEM_read_EC_PUBKEY(fb, &eckey, NULL, NULL); /* pub key first, then private */
+	PEM_read_ECPrivateKey(fa, &eckey, NULL, NULL);
+	fclose(fa), fclose(fb);
+	return (eckey);
 }
