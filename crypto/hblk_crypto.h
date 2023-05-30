@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <linux/limits.h>
-
+#include <string.h>
 
 # define EC_CURVE   NID_secp256k1
 
