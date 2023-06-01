@@ -5,7 +5,7 @@
  * into the given sig_t structure
  * @key: The EC_KEY object containing the private key
  * @msg: The value of the hash value (the given bytes) to sign
- * @msglen: The length of the digest hash value
+ * @msglen: The length of the digest hash value (the given bytes)
  * @sig: The signature structure that stores the signature and its length
  * Return: The signature that is contained in the given sig_t signature struct
 */
