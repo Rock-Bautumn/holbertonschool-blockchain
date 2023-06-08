@@ -1,5 +1,10 @@
 #include "blockchain.h"
 
+/**
+ * blockchain_create - Create a new blockchain
+ * Return: The address of the new blockchain
+*/
+
 blockchain_t *blockchain_create(void)
 {
 	block_t *new_block;
@@ -30,5 +35,5 @@ blockchain_t *blockchain_create(void)
 
 	llist_add_node(new_blockchain->chain, new_block, ADD_NODE_FRONT);
 
-	return(new_blockchain);
+	return (new_blockchain);
 }
