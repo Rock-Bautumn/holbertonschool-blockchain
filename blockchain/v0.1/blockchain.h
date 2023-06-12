@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <openssl/sha.h>
+#include <time.h>
 
 #define GENESIS_HASH \
 	"\xc5\x2c\x26\xc8\xb5\x46\x16\x39\x63\x5d\x8e\xdf\x2a\x97\xd4" \
@@ -85,8 +86,7 @@ typedef struct block_s
 } block_t;
 
 blockchain_t *blockchain_create(void);
-
-
+block_t *block_create(block_t const *prev, int8_t const *data, uint32_t data_len);
 
 
 
