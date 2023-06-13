@@ -14,9 +14,18 @@ uint8_t *sha256(int8_t const *s, size_t len,
 {
 	SHA256_CTX context;
 
-	SHA256_Init(&context);
-	SHA256_Update(&context, s, len);
-	SHA256_Final(digest, &context);
+	if (digest == NULL)
+		return (NULL);
+
+	if (!SHA256_Init(&context))
+		return (NULL);
+
+	if (!SHA256_Update(&context, s, len))
+		return (NULL);
+
+	if (!SHA256_Final(digest, &context))
+		return (NULL);
+
 	return (digest);
 }
 
