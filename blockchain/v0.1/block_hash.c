@@ -17,7 +17,7 @@ uint8_t *block_hash(
 		(int8_t const *) block,
 		sizeof(block->info) + block->data.len,
 		hash_buf
-	)
+	);
 
 	return (hash_buf);
 }
