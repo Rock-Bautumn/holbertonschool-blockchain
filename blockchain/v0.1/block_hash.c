@@ -15,7 +15,7 @@ uint8_t *block_hash(
 
 	sha256(
 		(int8_t const *) block,
-		sizeof(block->info) + block->data.len,
+		sizeof(block_info_t) + block->data.len,
 		hash_buf
 	);
 
