@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <openssl/sha.h>
 #include <time.h>
+#include <stdbool.h>
 #include "../../crypto/hblk_crypto.h"
 #include "provided/endianness.h"
 
@@ -101,6 +102,6 @@ void blockchain_destroy(blockchain_t *blockchain);
 uint8_t *block_hash(
 	block_t const *block, uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
 int blockchain_serialize(blockchain_t const *blockchain, char const *path);
-
+blockchain_t *blockchain_deserialize(char const *path);
 
 #endif /* _BLOCKCHAIN_H_*/
