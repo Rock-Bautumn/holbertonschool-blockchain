@@ -12,8 +12,7 @@
 uint32_t blockchain_difficulty(blockchain_t const *blockchain)
 {
 	uint64_t time_difference, expected_difference;
-	uint32_t return_difficulty;
-	block_t *current_block, *prev_block, *last_block;
+	block_t *current_block, *prev_block;
 
 	if (!blockchain || !blockchain->chain)
 		return (0);
