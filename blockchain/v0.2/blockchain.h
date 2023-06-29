@@ -23,7 +23,8 @@
 #define HBLK_BIG_ENDIAN 2
 #define HBLK_LITTLE_ENDIAN 1
 #define HBLK_INVALID_ENDIAN 0
-
+#define BLOCK_GENERATION_INTERVAL 1
+#define DIFFICULTY_ADJUSTMENT_INTERVAL 5
 
 /**
  * struct blockchain_s - Blockchain structure
@@ -105,7 +106,7 @@ blockchain_t *blockchain_deserialize(char const *path);
 int block_is_valid(block_t const *block, block_t const *prev_block);
 int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH], uint32_t difficulty);
 void block_mine(block_t *block);
-
+uint32_t blockchain_difficulty(blockchain_t const *blockchain);
 
 
 #endif /* _BLOCKCHAIN_H_*/
