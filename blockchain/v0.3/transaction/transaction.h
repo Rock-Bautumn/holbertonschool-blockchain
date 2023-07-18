@@ -51,11 +51,14 @@ typedef struct tx_out_s
  */
 typedef struct tx_in_s
 {
+/* if modifying the qty of hashes, update TX_IN_HASH_QTY define below */
 	uint8_t     block_hash[SHA256_DIGEST_LENGTH];
 	uint8_t     tx_id[SHA256_DIGEST_LENGTH];
 	uint8_t     tx_out_hash[SHA256_DIGEST_LENGTH];
 	sig_t       sig;
 } tx_in_t;
+
+#define TX_IN_HASH_QTY 3
 
 /**
  * struct unspent_tx_out_s - Unspent transaction output
@@ -79,7 +82,9 @@ unspent_tx_out_t *unspent_tx_out_create(
 	uint8_t block_hash[SHA256_DIGEST_LENGTH],
 	uint8_t tx_id[SHA256_DIGEST_LENGTH], tx_out_t const *out);
 tx_in_t *tx_in_create(unspent_tx_out_t const *unspent);
-
+uint8_t *transaction_hash(
+	transaction_t const *transaction,
+	uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
 
 
 #endif /* _TRANSACTION_H_ */
