@@ -12,8 +12,8 @@ uint8_t *transaction_hash(
 	uint8_t hash_buf[SHA256_DIGEST_LENGTH])
 {
 	uint8_t *buf_to_hash;
-	uint32_t buf_to_hash_len, buffer_offset, input_qty, output_qty, index;
-	uint32_t inputs_len, outputs_len;
+	uint32_t buf_to_hash_len, buffer_offset = 0, input_qty, output_qty;
+	uint32_t inputs_len, outputs_len, index;
 	tx_in_t *this_input;
 	tx_out_t *this_output;
 
