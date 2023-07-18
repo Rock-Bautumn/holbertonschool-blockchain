@@ -11,7 +11,7 @@ tx_out_t *tx_out_create(uint32_t amount, uint8_t const pub[EC_PUB_LEN])
 	tx_change->amount = amount;
 	memcpy(tx_change->pub, pub, EC_PUB_LEN);
 	SHA256((const unsigned char *)tx_change,
-		sizeof(tx_out_t) + EC_PUB_LEN,
+		4 + EC_PUB_LEN,
 		tx_change->hash);
 
 	return (tx_change);
