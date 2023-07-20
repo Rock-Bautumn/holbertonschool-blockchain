@@ -85,7 +85,10 @@ int _transaction_print_loop(transaction_t const *transaction,
 void _transaction_print(transaction_t const *transaction)
 {
 	if (!transaction)
+	{
+		printf("No transaction to print!\n");
 		return;
+	}
 
 	printf("Transaction: {\n");
 
