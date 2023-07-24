@@ -9,21 +9,25 @@ transaction_t *transaction_init(void)
 	transaction_t *new_tx;
 
 	new_tx = malloc(sizeof(transaction_t));
-	if (new_tx == NULL)
-		return (NULL);
+	if (!new_tx)
+		goto FAIL1;
+
 	new_tx->inputs = llist_create(MT_SUPPORT_FALSE);
 	new_tx->outputs = llist_create(MT_SUPPORT_FALSE);
+
 	if (!(new_tx->inputs))
-	{
-		free(new_tx);
-		return (NULL);
-	}
+		goto FAIL2;
 	else if (!(new_tx->outputs))
-	{
-		llist_destroy(new_tx->inputs, 0, NULL);
-		return (NULL);
-	}
+		goto FAIL3;
+
 	return (new_tx);
+
+FAIL3:
+	llist_destroy(new_tx->inputs, 0, NULL);
+FAIL2:
+	free(new_tx);
+FAIL1:
+	return (NULL);
 }
 
 /**
@@ -61,7 +65,6 @@ ssize_t process_balance(
 			new_tx_in = tx_in_create(unspent_tok);
 			if (!new_tx_in || llist_add_node(inputs, new_tx_in, ADD_NODE_REAR))
 				goto FAIL;
-
 			inputs_amount_sum += unspent_tok->out.amount;
 			if (inputs_amount_sum >= sending_amount)
 				break;

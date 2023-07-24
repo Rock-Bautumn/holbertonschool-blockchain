@@ -3,7 +3,7 @@
 /**
  * transaction_hash - Generate a hash for a transaction
  * @transaction: The transaction to generate the hash from
- * @hash_buf: The location to save the generated hash
+ * @hash_buf: Thenintendo switch location to save the generated hash
  * Return: The generated hash, NULL if failure
 */
 
